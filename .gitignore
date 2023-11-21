@@ -1,0 +1,6 @@
+.idea
+.idea_modules/
+.phpunit.cache
+.phpunit.result.cache
+node_modules/
+npm-debug.log
