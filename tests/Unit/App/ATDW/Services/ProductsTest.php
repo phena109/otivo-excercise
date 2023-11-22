@@ -8,11 +8,26 @@ use Tests\TestCase;
 class ProductsTest extends TestCase
 {
 
-    public function testGetByAreaAndOrSuburb()
+    /**
+     * @covers Products::getByAreaAndOrSuburb
+     */
+    public function testGetByAreaAndOrSuburb(): void
     {
+        $this->markTestSkipped('Manually enable if needed');
+        $areasService = new Products();
+        ['data' => $products] = $areasService->getByAreaAndOrSuburb(
+            area: 'Bathurst',
+            size: 100,
+            forceRefresh: true,
+        );
+        static::assertIsArray($products);
+        static::assertGreaterThan(0, count($products));
     }
 
-    public function testGetByRegion()
+    /**
+     * @covers Products::getByRegion
+     */
+    public function testGetByRegion(): void
     {
         $this->markTestSkipped('Manually enable if needed');
         $areasService = new Products();
@@ -21,7 +36,10 @@ class ProductsTest extends TestCase
         static::assertGreaterThan(0, count($products));
     }
 
-    public function testGetAllAreasSuburbsByRegion()
+    /**
+     * @covers Products::getAllAreasSuburbsByRegion
+     */
+    public function testGetAllAreasSuburbsByRegion(): void
     {
         $this->markTestSkipped('Manually enable if needed');
         $areasService = new Products();
