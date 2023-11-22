@@ -36,6 +36,7 @@ class Products extends \ArrayObject
     }
 
     /**
+     * Get the products by the given region
      * @return array{total: int, page: int, size: int, data: Product[]}
      */
     public function getByRegion(
@@ -49,6 +50,7 @@ class Products extends \ArrayObject
         try {
             $key = implode('|', [
                 static::class,
+                __FUNCTION__,
                 match (true) {
                     $region instanceof Region => $region->getRegionId(),
                     is_string($region) => $region
@@ -78,11 +80,53 @@ class Products extends \ArrayObject
         });
     }
 
+    /**
+     * A niche function.
+     * Pull in area to city map data based on the given region. This will serve as the base of the frontend filter.
+     * @param Region|string $region
+     * @param array $options
+     * @param bool $forceRefresh
+     * @param array $query
+     * @return array
+     * @see getAllAreasSuburbsByRegionProcess
+     */
     public function getAllAreasSuburbsByRegion(
         Region|string $region,
         array $options = [],
         bool $forceRefresh = false,
         array $query = ['dsc' => false],
+    ): array {
+        try {
+            $key = implode('|', [
+                static::class,
+                __FUNCTION__,
+                match (true) {
+                    $region instanceof Region => $region->getRegionId(),
+                    is_string($region) => $region
+                },
+                json_encode($options, JSON_THROW_ON_ERROR)
+            ]);
+        } catch (\JsonException) {
+            return [];
+        }
+        if ($forceRefresh) {
+            Cache::forget($key);
+        }
+        return Cache::remember(
+            $key,
+            86400,
+            fn() => $this->getAllAreasSuburbsByRegionProcess($region, $options, $forceRefresh, $query)
+        );
+    }
+
+    /**
+     * Doing the actual processing for {@see getAllAreasSuburbsByRegion}.
+     */
+    public function getAllAreasSuburbsByRegionProcess(
+        Region|string $region,
+        array $options,
+        bool $forceRefresh,
+        array $query,
     ): array {
         $output = [];
         $page = 0;
@@ -100,10 +144,9 @@ class Products extends \ArrayObject
                 }
             }
         } while ($page * $size < $total);
-
         foreach ($output as $areaName => $cities) {
-            $output[$areaName] = array_unique($cities);
-            sort($output[$areaName]);
+            $output[$areaName] = array_intersect_key($cities, array_unique(array_map('strtolower', $cities)));
+            usort($output[$areaName], static fn($a, $b) => strcasecmp($a, $b));
         }
         return $output;
     }
@@ -123,6 +166,7 @@ class Products extends \ArrayObject
         try {
             $key = implode('|', [
                 static::class,
+                __FUNCTION__,
                 match (true) {
                     $area instanceof Area => $area->getAreaId(),
                     is_string($area) => $area,

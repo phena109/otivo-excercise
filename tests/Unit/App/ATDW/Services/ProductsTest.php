@@ -14,7 +14,7 @@ class ProductsTest extends TestCase
 
     public function testGetByRegion()
     {
-//        $this->markTestSkipped('Manually enable if needed');
+        $this->markTestSkipped('Manually enable if needed');
         $areasService = new Products();
         ['data' => $products] = $areasService->getByRegion('Greater Sydney', forceRefresh: true);
         static::assertIsArray($products);
@@ -23,8 +23,9 @@ class ProductsTest extends TestCase
 
     public function testGetAllAreasSuburbsByRegion()
     {
+        $this->markTestSkipped('Manually enable if needed');
         $areasService = new Products();
         $array = $areasService->getAllAreasSuburbsByRegion('Greater Sydney', forceRefresh: true);
-        static::assertIsArray($array);
+        static::assertIsArray($array); // @todo write meaningful assertion
     }
 }
