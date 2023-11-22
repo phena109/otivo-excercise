@@ -5,6 +5,7 @@ namespace App\ATDW\Services;
 use App\ATDW\Models\Suburb;
 use App\ATDW\State;
 use App\ATDW\Utf16LeParser;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Cache;
 
 class Suburbs extends \ArrayObject
@@ -22,6 +23,9 @@ class Suburbs extends \ArrayObject
         return parent::offsetGet($key);
     }
 
+    /**
+     * @throws GuzzleException
+     */
     protected function callApi(?State $state = null, array $options = []): \GuzzleHttp\Psr7\Response
     {
         $query = ['out' => 'json'];
