@@ -2,17 +2,16 @@
 
 namespace Tests\Unit\App\ATDW\Services;
 
-use App\ATDW\Services\Areas;
+use App\ATDW\Services\Suburbs;
 use Tests\TestCase;
 
-class AreasTest extends TestCase
+class SuburbsTest extends TestCase
 {
-
     public function testGet(): void
     {
         $this->markTestSkipped('Manually enable if needed');
-        $areasService = new Areas();
-        $areas = $areasService->get(null, [], true);
+        $suburbsService = new Suburbs();
+        $areas = $suburbsService->get(null, [], true);
         static::assertIsArray($areas);
         static::assertGreaterThan(0, count($areas));
     }
