@@ -16,14 +16,19 @@ class ApiCall
         $this->apiKey = $overrideApiKey ?? config('params.ATDW_API_KEY');
     }
 
+    public function getGetUrl(array $query = []): string
+    {
+        $queryString = http_build_query(['key' => $this->apiKey, ...$query]);
+        return static::BASE_URL . '/' . ltrim("$this->path?$queryString", '/');
+    }
+
     /**
      * @throws GuzzleException
      */
     public function get(array $query = [], array $options = []): Response
     {
         $client = new Client();
-        $queryString = http_build_query(['key', $this->apiKey, ...$query]);
-        $url = static::BASE_URL . '/' . ltrim("$this->path?$queryString", '/');
+        $url = $this->getGetUrl($query);
         return $client->get($url, $options);
     }
 }

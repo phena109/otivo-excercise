@@ -7,7 +7,10 @@ use PHPUnit\Framework\TestCase;
 
 class ApiCallTest extends TestCase
 {
-    public function test__construct()
+    /**
+     * @covers \App\ATDW\Services\ApiCall
+     */
+    public function test__construct(): void
     {
         $apiCall = new ApiCall('foo', 'bar');
         $reflectionClass = new \ReflectionClass(ApiCall::class);
@@ -15,5 +18,15 @@ class ApiCallTest extends TestCase
         $path = $reflectionClass->getProperty('path');
         static::assertEquals('foo', $path->getValue($apiCall));
         static::assertEquals('bar', $apiKey->getValue($apiCall));
+    }
+
+    /**
+     * @covers \App\ATDW\Services\ApiCall::getGetUrl
+     */
+    public function test_getGetUrl(): void
+    {
+        $apiCall = new ApiCall('foo', 'bar');
+        $url = $apiCall->getGetUrl(['foobar' => '2023']);
+        static::assertSame('https://atlas.atdw-online.com.au/api/atlas/foo?key=bar&foobar=2023', $url);
     }
 }
