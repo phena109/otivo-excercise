@@ -23,7 +23,7 @@ class Region
     {
         $properties = array_intersect_key($data, static::NAME_MAP);
         $output = new static();
-        $output->setState($state);
+        $output->state = $state;
         foreach ($properties as $property => $value) {
             $propertyName = static::NAME_MAP[$property];
             if (property_exists(static::class, $propertyName)) {
@@ -33,14 +33,9 @@ class Region
         return $output;
     }
 
-    public function getSuburbId(): string
+    public function getRegionId(): string
     {
-        return $this->suburbId;
-    }
-
-    public function setSuburbId(string $suburbId): void
-    {
-        $this->suburbId = $suburbId;
+        return $this->regionId;
     }
 
     public function getCode(): string
@@ -48,19 +43,9 @@ class Region
         return $this->code;
     }
 
-    public function setCode(string $code): void
-    {
-        $this->code = $code;
-    }
-
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
     }
 
     public function getType(): string
@@ -68,18 +53,8 @@ class Region
         return $this->type;
     }
 
-    public function setType(string $type): void
-    {
-        $this->type = $type;
-    }
-
     public function getState(): State
     {
         return $this->state;
-    }
-
-    public function setState(State $state): void
-    {
-        $this->state = $state;
     }
 }

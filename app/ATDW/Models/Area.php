@@ -53,19 +53,9 @@ class Area
         return $this->areaId;
     }
 
-    public function setAreaId(int $areaId): void
-    {
-        $this->areaId = $areaId;
-    }
-
     public function getCode(): string
     {
         return $this->code;
-    }
-
-    public function setCode(string $code): void
-    {
-        $this->code = $code;
     }
 
     public function getName(): string
@@ -73,19 +63,9 @@ class Area
         return $this->name;
     }
 
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
     public function getType(): string
     {
         return $this->type;
-    }
-
-    public function setType(string $type): void
-    {
-        $this->type = $type;
     }
 
     public function getDomesticRegionId(): int
@@ -93,28 +73,13 @@ class Area
         return $this->domesticRegionId;
     }
 
-    public function setDomesticRegionId(int $domesticRegionId): void
-    {
-        $this->domesticRegionId = $domesticRegionId;
-    }
-
     public function getStateId(): int
     {
         return $this->stateId;
     }
 
-    public function setStateId(int $stateId): void
-    {
-        $this->stateId = $stateId;
-    }
-
     public function getStateCode(): string
     {
         return $this->stateCode;
-    }
-
-    public function setStateCode(string $stateCode): void
-    {
-        $this->stateCode = $stateCode;
     }
 }
