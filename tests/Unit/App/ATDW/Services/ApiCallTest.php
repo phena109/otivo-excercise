@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\App\ATDW\Services;
+namespace Tests\Unit\App\ATDW\Services;
 
 use App\ATDW\Services\ApiCall;
 use App\ATDW\Utf16LeParser;

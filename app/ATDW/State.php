@@ -2,14 +2,18 @@
 
 namespace App\ATDW;
 
-enum State
+enum State: string
 {
-    case ACT;
-    case NSW;
-    case NT;
-    case TAS;
-    case SA;
-    case QLD;
-    case WA;
-    case VIC;
+    case ACT = 'ACT';
+    case NSW = 'NSW';
+    case NT = 'NT';
+    case TAS = 'TAS';
+    case SA = 'SA';
+    case QLD = 'QLD';
+    case WA = 'WA';
+    case VIC = 'VIC';
+
+    public function toString(): string {
+        return $this->value;
+    }
 }
