@@ -2,7 +2,9 @@
 
 namespace App\ATDW\Models;
 
-class Address
+use Illuminate\Contracts\Support\Arrayable;
+
+class Address implements Arrayable
 {
     protected string $area;
     protected string $city;
@@ -33,5 +35,13 @@ class Address
     public function getCity(): string
     {
         return $this->city;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'area' => $this->area,
+            'city' => $this->city,
+        ];
     }
 }

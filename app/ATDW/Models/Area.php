@@ -2,7 +2,9 @@
 
 namespace App\ATDW\Models;
 
-class Area
+use Illuminate\Contracts\Support\Arrayable;
+
+class Area implements Arrayable
 {
     protected const NAME_MAP = [
         'AreaId' => 'areaId',
@@ -35,7 +37,7 @@ class Area
         return $output;
     }
 
-    public function asArray(): array
+    public function toArray(): array
     {
         return [
             'areaId' => $this->areaId,

@@ -2,7 +2,9 @@
 
 namespace App\ATDW\Models;
 
-class Product
+use Illuminate\Contracts\Support\Arrayable;
+
+class Product implements Arrayable
 {
     protected string $productName;
     protected string $productImage;
@@ -37,5 +39,14 @@ class Product
     public function getAddresses(): array
     {
         return $this->addresses;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'productName' => $this->productName,
+            'productImage' => $this->productImage,
+            'addresses' => $this->addresses,
+        ];
     }
 }

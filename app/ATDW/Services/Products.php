@@ -227,6 +227,10 @@ class Products extends \ArrayObject
         return $output;
     }
 
+    /**
+     * Get the products by either region, area or city or suburb
+     * @return array{total: int, page: int, size: int, data: Product[]}
+     */
     public function getProducts(
         SearchBy $by,
         Region|Area|Suburb|string $value,
@@ -235,13 +239,12 @@ class Products extends \ArrayObject
         array $options = [],
         bool $forceRefresh = false,
         array $query = ['dsc' => false],
-    )
-    {
+    ): array {
         try {
             $key = implode('|', [
                 static::class,
                 __FUNCTION__,
-                $by->toString(),
+                $by->toAtdwQs(),
                 match (true) {
                     $value instanceof Region => $value->getRegionId(),
                     $value instanceof Area => $value->getAreaId(),
@@ -267,7 +270,7 @@ class Products extends \ArrayObject
                 default => null,
             };
             if ($param !== null) {
-                $query[$by->toString()] = $param;
+                $query[$by->toAtdwQs()] = $param;
             }
             $query['pge'] = $page;
             $query['size'] = $size;

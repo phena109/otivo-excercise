@@ -2,13 +2,32 @@
 
 namespace App\ATDW;
 
-enum SearchBy: string
+enum SearchBy
 {
-    case Region = 'rg';
-    case Area = 'ar';
-    case CityOrSuburb = 'ct';
+    case Region;
+    case Area;
+    case CityOrSuburb;
 
-    public function toString(): string {
-        return $this->value;
+    /**
+     * For calling ATDW api
+     */
+    public const ATDW_QS = [
+        self::Region->name => 'rg',
+        self::Area->name => 'ar',
+        self::CityOrSuburb->name => 'ct',
+    ];
+
+    /**
+     * For APIs we exposed
+     */
+    public const API_QS = [
+        'region' => self::Region,
+        'area' => self::Area,
+        'city' => self::CityOrSuburb,
+        'suburb' => self::CityOrSuburb,
+    ];
+
+    public function toAtdwQs(): string {
+        return self::ATDW_QS[$this->name];
     }
 }
