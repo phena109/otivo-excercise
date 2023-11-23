@@ -6,6 +6,7 @@ use App\ATDW\Models\Area;
 use App\ATDW\Models\Product;
 use App\ATDW\Models\Region;
 use App\ATDW\Models\Suburb;
+use App\ATDW\SearchBy;
 use App\ATDW\Utf16LeParser;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
@@ -224,5 +225,53 @@ class Products extends \ArrayObject
             $output['data'][] = Product::fromArray($product);
         }
         return $output;
+    }
+
+    public function getProducts(
+        SearchBy $by,
+        Region|Area|Suburb|string $value,
+        int $page = 1,
+        int $size = 10,
+        array $options = [],
+        bool $forceRefresh = false,
+        array $query = ['dsc' => false],
+    )
+    {
+        try {
+            $key = implode('|', [
+                static::class,
+                __FUNCTION__,
+                $by->toString(),
+                match (true) {
+                    $value instanceof Region => $value->getRegionId(),
+                    $value instanceof Area => $value->getAreaId(),
+                    $value instanceof Suburb => $value->getSuburbId(),
+                    is_string($value) => $value
+                },
+                $page,
+                $size,
+                json_encode($options, JSON_THROW_ON_ERROR)
+            ]);
+        } catch (\JsonException) {
+            return static::ERROR_RESULT;
+        }
+        if ($forceRefresh) {
+            Cache::forget($key);
+        }
+        return Cache::remember($key, 86400, function () use ($by, $value, $page, $size, $options, $query) {
+            $param = match (true) {
+                $value instanceof Region => $value->getRegionId(),
+                $value instanceof Area => $value->getAreaId(),
+                $value instanceof Suburb => $value->getSuburbId(),
+                is_string($value) => $value,
+                default => null,
+            };
+            if ($param !== null) {
+                $query[$by->toString()] = $param;
+            }
+            $query['pge'] = $page;
+            $query['size'] = $size;
+            return $this->buildOutput($this->callApi($query, $options), $page, $size);
+        });
     }
 }

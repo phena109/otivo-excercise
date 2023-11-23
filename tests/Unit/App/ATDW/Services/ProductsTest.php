@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\App\ATDW\Services;
 
+use App\ATDW\SearchBy;
 use App\ATDW\Services\Products;
 use Tests\TestCase;
 
@@ -45,5 +46,17 @@ class ProductsTest extends TestCase
         $areasService = new Products();
         $array = $areasService->getAllAreasSuburbsByRegion('Greater Sydney', forceRefresh: true);
         static::assertIsArray($array); // @todo write meaningful assertion
+    }
+
+    /**
+     * @covers Products::getProducts
+     */
+    public function testGetProducts(): void
+    {
+        $this->markTestSkipped('Manually enable if needed');
+        $areasService = new Products();
+        ['data' => $products] = $areasService->getProducts(SearchBy::Region, 'Greater Sydney', forceRefresh: true);
+        static::assertIsArray($products);
+        static::assertGreaterThan(0, count($products));
     }
 }
