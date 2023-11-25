@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import Accommodation from "@/components/Accomodation.vue";
+import Accommodation from "@/components/Accommodation.vue";
+import { useAppStore } from "@/stores/app";
+import AccommodationList from "@/components/AccommodationList.vue";
+
+const store = useAppStore();
+
 
 </script>
 
@@ -8,9 +13,16 @@ import Accommodation from "@/components/Accomodation.vue";
         <h1>Welcome! This page will look for Sydney Accommodations for you!</h1>
     </header>
     <div>
-        <accommodation
-            name="Hello World"
-        ></accommodation>
+        <accommodation-list
+            :list="[
+                {
+                    name: 'accommodation 1'
+                },
+                {
+                    name: 'two'
+                }
+            ]"
+        ></accommodation-list>
     </div>
 </template>
 
