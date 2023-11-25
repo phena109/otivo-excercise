@@ -6,3 +6,12 @@ export interface AccommodationProps {
 export interface AccommodationListProps {
     list: AccommodationProps[]
 }
+
+export interface Area {
+    name: string
+}
+
+export interface City {
+    area: string;
+    city: string;
+}

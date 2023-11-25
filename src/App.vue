@@ -4,7 +4,7 @@ import { useAppStore } from "@/stores/app";
 import AccommodationList from "@/components/AccommodationList.vue";
 
 const store = useAppStore();
-
+store.pullAreaCityMap();
 
 </script>
 

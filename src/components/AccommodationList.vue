@@ -6,10 +6,12 @@ const props = withDefaults(defineProps<AccommodationListProps>(), {
   list: () => []
 });
 
+let loading = false;
+
 </script>
 
 <template>
-  <div class="accommodation-list">
+  <div class="accommodation-list" v-if="!loading">
     <accommodation
         class="accommodation"
         v-for="a in list"
@@ -17,6 +19,7 @@ const props = withDefaults(defineProps<AccommodationListProps>(), {
         :image="a.image"
     ></accommodation>
   </div>
+  <div v-if="loading">Loading...</div>
 </template>
 
 <style lang="scss" scoped>
@@ -25,7 +28,7 @@ const props = withDefaults(defineProps<AccommodationListProps>(), {
   flex-direction: row;
   gap: 10px;
   .accommodation {
-    flex-basis: 33%;
+    flex-basis: 25%;
   }
 }
 
