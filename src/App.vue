@@ -2,8 +2,6 @@
 import AccommodationList from "@/components/AccommodationList.vue";
 import AreaCityFilter from "@/components/AreaCityFilter.vue";
 import {useAppStore} from "@/stores/app";
-import BlockUI from "primevue/blockui";
-import ProgressSpinner from "primevue/progressspinner";
 
 const store = useAppStore();
 </script>
