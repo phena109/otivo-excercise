@@ -6,7 +6,6 @@ import BlockUI from "primevue/blockui";
 import ProgressSpinner from "primevue/progressspinner";
 
 const store = useAppStore();
-
 </script>
 
 <template>
@@ -14,19 +13,14 @@ const store = useAppStore();
     <h1>Welcome! This page will look for Sydney Accommodations for you!</h1>
   </header>
   <div>
-    <block-u-i :blocked="store.loadingAreaCityMap">
-      <area-city-filter
-          @city-selected="store.getProducts($event)"
-      ></area-city-filter>
-      <progress-spinner v-if="store.loadingAreaCityMap"/>
-    </block-u-i>
-    <block-u-i :blocked="store.loadingProducts">
-      <accommodation-list
-          class="accommodation-list"
-          :list="store.products"
-      ></accommodation-list>
-      <progress-spinner v-if="store.loadingProducts"/>
-    </block-u-i>
+    <area-city-filter
+        class="area-city-filter"
+        @city-selected="store.getProducts($event)"
+    ></area-city-filter>
+    <accommodation-list
+        class="accommodation-list"
+        :list="store.products"
+    ></accommodation-list>
   </div>
 </template>
 
@@ -34,6 +28,12 @@ const store = useAppStore();
 header h1 {
   text-align: center;
 }
+
+.area-city-filter {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
 .accommodation-list {
   width: 100%;
 }

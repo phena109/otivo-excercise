@@ -34,7 +34,7 @@ export const useAppStore = defineStore('app', () => {
 
     async function getProducts(value: string) {
         try {
-            products.slice(0);
+            products.length = 0;
             loadingProducts.value = true;
             const params = {by: 'city', value};
             const response = await axios.get<{

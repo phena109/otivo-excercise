@@ -37,5 +37,11 @@ const accommodation_image_style = computed(() => ({
     background-position: center;
     background-repeat: no-repeat;
   }
+
+  .accommodation-name {
+    min-height: 2rem;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 </style>
