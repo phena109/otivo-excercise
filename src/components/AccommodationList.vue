@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import Accommodation from "@/components/Accommodation.vue";
-import type {AccommodationListProps, AccommodationProps} from "@/lib/definitions";
-
+import type {AccommodationListProps} from "@/lib/definitions";
 const props = withDefaults(defineProps<AccommodationListProps>(), {
   list: () => []
 });
-
-let loading = false;
-
 </script>
 
 <template>
-  <div class="accommodation-list" v-if="!loading">
+  <div class="accommodation-list">
     <accommodation
         class="accommodation"
         v-for="a in list"
@@ -19,14 +15,16 @@ let loading = false;
         :image="a.image"
     ></accommodation>
   </div>
-  <div v-if="loading">Loading...</div>
 </template>
 
 <style lang="scss" scoped>
 .accommodation-list {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   gap: 10px;
+  width: 100%;
+
   .accommodation {
     flex-basis: 25%;
   }

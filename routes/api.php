@@ -18,11 +18,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 Route::get('/area-city-map', static fn(): array => (new Products())->getAllAreasSuburbsByRegion(
     Region::fromStateAndArray(State::NSW, config('params.Greater Sydney Region'))
 ));
