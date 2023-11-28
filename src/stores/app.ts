@@ -3,7 +3,7 @@ import axios from "axios";
 import {reactive, ref} from "vue";
 
 export const useAppStore = defineStore('app', () => {
-    const products: any[] = [];
+    const products: any[] = reactive([]);
     let areaCityMap: {
         [area: string]: string[]
     } = reactive({});
@@ -34,6 +34,7 @@ export const useAppStore = defineStore('app', () => {
 
     async function getProducts(value: string) {
         try {
+            products.slice(0);
             loadingProducts.value = true;
             const params = {by: 'city', value};
             const response = await axios.get<{

@@ -19,14 +19,15 @@ const props = withDefaults(defineProps<AccommodationListProps>(), {
 
 <style lang="scss" scoped>
 .accommodation-list {
+  --totalColumn: 4;
+  --gapSize: 10px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--gapSize);
   width: 100%;
-
   .accommodation {
-    flex-basis: 25%;
+    flex-basis: calc((100% - (var(--gapSize) * (var(--totalColumn) - 1))) / var(--totalColumn));
   }
 }
 
